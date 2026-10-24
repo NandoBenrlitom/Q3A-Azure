@@ -1,0 +1,163 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-mono: var(--font-terminal);
+  --font-sans: var(--font-terminal);
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+}
+
+:root {
+  --font-terminal: "Courier New", Courier, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --background: oklch(0.2264 0 0);
+  --foreground: oklch(0.9491 0 0);
+  --card: oklch(0.2931 0 0);
+  --card-foreground: oklch(0.8975 0 0);
+  --popover: oklch(0.2931 0 0);
+  --popover-foreground: oklch(0.8975 0 0);
+  --primary: oklch(0.5768 0.1802 31.6651);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.3485 0 0);
+  --secondary-foreground: oklch(0.9491 0 0);
+  --muted: oklch(0.31 0 0);
+  --muted-foreground: oklch(0.738 0 0);
+  --accent: oklch(0.3485 0 0);
+  --accent-foreground: oklch(0.9491 0 0);
+  --border: oklch(0.3562 0 0);
+  --input: oklch(0.285 0 0);
+  --ring: oklch(0.7615 0.1568 69.7819);
+}
+
+* {
+  @apply border-border outline-ring/50;
+}
+
+html {
+  min-width: 320px;
+  background: var(--background);
+  font-size: 17px;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  overflow-x: clip;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-terminal);
+  -webkit-font-smoothing: antialiased;
+}
+
+html.game-page-active,
+body.game-page-active {
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+  background: #000;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+a,
+button,
+input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+@layer components {
+  .arena-card {
+    transition: border-color 150ms ease, background-color 150ms ease;
+  }
+
+  .arena-card:hover,
+  .arena-card:focus-within {
+    border-color: color-mix(in oklch, var(--primary) 48%, var(--border));
+  }
+
+  .weapon-viewer {
+    position: relative;
+    min-height: 390px;
+    overflow: hidden;
+    border: 1px solid color-mix(in oklch, var(--weapon-accent) 32%, var(--border));
+    background:
+      radial-gradient(circle at 50% 44%, color-mix(in srgb, var(--weapon-accent) 14%, transparent) 0, transparent 44%),
+      linear-gradient(145deg, color-mix(in oklch, var(--card) 88%, black), var(--background));
+  }
+
+  .weapon-viewer::after {
+    content: "";
+    position: absolute;
+    inset: auto 12% 17% 12%;
+    height: 12%;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--weapon-accent) 16%, transparent);
+    filter: blur(22px);
+    pointer-events: none;
+  }
+
+  .weapon-viewer-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--weapon-accent) 8%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--weapon-accent) 8%, transparent) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: linear-gradient(to bottom, transparent, black 28%, black 80%, transparent);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+}
+
+@media (min-width: 1024px) {
+  .weapon-viewer {
+    min-height: 500px;
+  }
+}
+
+@media (max-width: 639px) {
+  html {
+    font-size: 16px;
+  }
+
+  .weapon-viewer {
+    min-height: 310px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arena-card {
+    transition: none;
+  }
+}
