@@ -1,4 +1,4 @@
-# Proyek Komputasi Awan (Cloud Computing) — Q3JS di Microsoft Azure
+# Proyek Komputasi Awan (Cloud Computing) — Q3A-Azure
 
 > **Tugas Praktikum / Proyek Komputasi Awan**  
 > **Nama:** Nanda Pratama Sugiarto  
@@ -9,7 +9,7 @@
 
 ## 📌 Tentang Proyek
 
-**Q3JS** adalah implementasi multiplayer *Quake III Arena* berbasis web modern yang dibangun di atas mesin **ioquake3** dan dikompilasi ke **WebAssembly (WASM)**. Proyek ini mencakup arsitektur terdistribusi lengkap yang siap di-deploy ke lingkungan cloud (seperti **Microsoft Azure**), yang terdiri dari:
+**Q3A-Azure** adalah implementasi multiplayer *Quake III Arena* berbasis web modern yang dibangun di atas mesin **ioquake3** dan dikompilasi ke **WebAssembly (WASM)**. Proyek ini mencakup arsitektur terdistribusi lengkap yang siap di-deploy ke lingkungan cloud (seperti **Microsoft Azure**), yang terdiri dari:
 
 1. **Website (Frontend)**: Antarmuka web berbasis Next.js, React, dan Tailwind CSS untuk server browser, peluncur game, profil pemain, dan papan skor.
 2. **Client (WASM)**: Engine game ioquake3 yang berjalan langsung di browser pengguna via WebAssembly & WebGL.
@@ -72,11 +72,11 @@ Sebelum menjalankan aplikasi, pastikan sistem/VM Anda telah terpasang:
 
 ## 🚀 Panduan Menjalankan Secara Lengkap (Langkah demi Langkah)
 
-> ⚠️ **Catatan Penting Direktori**: Seluruh perintah di bawah ini **wajib dijalankan dari dalam direktori `q3js/`**.
+> ⚠️ **Catatan Penting Direktori**: Seluruh perintah di bawah ini **wajib dijalankan dari dalam direktori `Q3A-Azure`**.
 
 ### 1. Masuk ke Direktori Proyek dan Instal Dependensi
 ```bash
-cd q3js
+cd Q3A-Azure
 pnpm install --frozen-lockfile
 ```
 
@@ -99,18 +99,18 @@ Q3JS_MASTER_URL=http://localhost:8080
 
 ### 3. Menjalankan Layanan (Gunakan Terminal Terpisah)
 
-Buka terminal-terminal berikut dan jalankan perintah pada masing-masing terminal dari dalam folder `q3js/`:
+Buka terminal-terminal berikut dan jalankan perintah pada masing-masing terminal dari dalam folder `Q3A-Azure/`:
 
 #### **Terminal 1: Menjalankan Database PostgreSQL**
 ```bash
-cd q3js
+cd Q3A-Azure
 docker compose up -d database
 ```
 *Tunggu beberapa detik hingga container PostgreSQL siap menerima koneksi.*
 
 #### **Terminal 2: Menjalankan Master Server API**
 ```bash
-cd q3js
+cd Q3A-Azure
 make master-run
 ```
 *Layanan Master API akan berjalan di `http://localhost:8080`. Dokumentasi Swagger dapat diakses di `http://localhost:8080/q/swagger-ui`.*
@@ -118,7 +118,7 @@ make master-run
 #### **Terminal 3: Menjalankan Game Server & WebSocket Gateway**
 Tentukan path direktori data game Anda (berisi folder `baseq3/*.pk3`):
 ```bash
-cd q3js
+cd Q3A-Azure
 export Q3JS_DATA_DIR=/path/ke/folder/data-quake
 Q3JS_BASEPATH="$Q3JS_DATA_DIR" make server-run
 ```
@@ -127,7 +127,7 @@ Q3JS_BASEPATH="$Q3JS_DATA_DIR" make server-run
 #### **Terminal 4: Menjalankan Static Asset Server (Nginx)**
 Static server bertugas menyediakan aset game untuk diunduh oleh browser klien:
 ```bash
-cd q3js
+cd Q3A-Azure
 export Q3JS_DATA_DIR=/path/ke/folder/data-quake
 docker build -f static/Dockerfile -t q3js-static .
 docker run --rm -p 8081:8080 -v "$Q3JS_DATA_DIR:/data:ro" q3js-static
@@ -135,7 +135,7 @@ docker run --rm -p 8081:8080 -v "$Q3JS_DATA_DIR:/data:ro" q3js-static
 
 #### **Terminal 5: Menjalankan Website Frontend**
 ```bash
-cd q3js
+cd Q3A-Azure
 pnpm --dir website dev
 ```
 *Buka browser dan akses [http://localhost:3000](http://localhost:3000). Server game lokal akan terdeteksi otomatis pada server list.*
@@ -163,5 +163,5 @@ Untuk keperluan praktikum / tugas **Komputasi Awan (Azure)**:
 
 Proyek ini menggunakan beberapa lisensi:
 - Engine `game/engine/` (berbasis ioquake3) berlisensi **GPL-2.0-only**.
-- Komponen web client, backend master, gateway server, dan website bersumber dari repositori asli Q3JS.
+- Komponen web client, backend master, gateway server, dan website bersumber dari repositori asli Q3JS yang dimodifikasi.
 - Data aset asli Quake III Arena (`.pk3`) adalah hak cipta id Software / ZeniMax Media dan tidak didistribusikan dalam repositori ini.
